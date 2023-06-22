@@ -36,7 +36,9 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params
   const user = await prisma.user.findUnique({ where: { id: Number(id) } })
-
+  if (!user) {
+    return res.status(404).json({error: "User doesn't exist!"})
+   }
   res.json(user)
 })
 
@@ -47,7 +49,7 @@ router.put('/:id', async (req, res) => {
   const { bio, name, image } = req.body
   
   try {
-    const result = prisma.user.update({
+    const result = await prisma.user.update({
       where: {id: Number(id)},
       data: {
         bio,

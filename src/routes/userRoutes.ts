@@ -28,12 +28,12 @@ router.post('/', async (req, res) => {
 // list users
 router.get('/', async (req, res) => {
   const allUsers = await prisma.user.findMany({
-    select: {
+/*     select: {
       id: true,
       name: true,
       image: true,
       bio: true
-    }
+    } */
   })
 
   res.json(allUsers)

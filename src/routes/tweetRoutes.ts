@@ -17,7 +17,10 @@ router.post('/', async (req, res) => {
       data: {
         content,
         image,
-        userId : user.id
+        userId: user.id,
+      },
+      include: {
+        user: true,
       },
     })
     res.json(result)
@@ -47,6 +50,8 @@ router.get('/', async (req, res) => {
 // get one tweet
 router.get('/:id', async (req, res) => {
   const { id } = req.params
+  console.log('Query tweet with id:', id)
+
   const tweet = await prisma.tweet.findUnique({
     where: {
       id: Number(id),
